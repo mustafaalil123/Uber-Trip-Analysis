@@ -41,25 +41,27 @@ data$dayofweek <- factor(wday(data$Date.Time, label=TRUE))
 data$hour = factor(hour(hms(data$Time)))
 ```
 
+
+
+
 ## Including Plots
-
-You can also embed plots, for example:
-
-
 ```{r }
-# Aggregate data by  of the month 
-weekday_data <- data %>% group_by(dayofweek) %>% dplyr::summarize(Trips = n())
-weekday_data
+# Aggregate data by day of the month 
+day_data <- data %>% group_by(day) %>% dplyr::summarize(Trips = n())
+day_data
 
 
-# Plot the data for the days of week
-ggplot(weekday_data, aes(dayofweek, Trips)) + 
+# Plot the data for the day
+ggplot(day_data, aes(day, Trips)) + 
 geom_bar(stat = "identity", fill = "steelblue") +
-ggtitle("Trips by daysofweek of the month") + 
+ggtitle("Trips by day of the month") + 
 theme(legend.position = "none") + 
 scale_y_continuous(labels = comma)
+
 ```
 
+
+#Hourly displaying of data
 ```{r }
 hourly_data <- data %>% 
                     group_by(hour) %>% 
@@ -82,18 +84,26 @@ theme(legend.position = "none",
 scale_y_continuous(labels=comma)
 ```
 
+
+
+
 ```{r }
-# Aggregate data by day of the month 
-day_data <- data %>% group_by(day) %>% dplyr::summarize(Trips = n())
-day_data
+# Aggregate data by  of the month 
+weekday_data <- data %>% group_by(dayofweek) %>% dplyr::summarize(Trips = n())
+weekday_data
 
 
-# Plot the data for the day
-ggplot(day_data, aes(day, Trips)) + 
+# Plot the data for the days of week
+ggplot(weekday_data, aes(dayofweek, Trips)) + 
 geom_bar(stat = "identity", fill = "steelblue") +
-ggtitle("Trips by day of the month") + 
+ggtitle("Trips by daysofweek of the month") + 
 theme(legend.position = "none") + 
 scale_y_continuous(labels = comma)
+```
+
+
+
+```{r }
 
 
 
@@ -107,6 +117,8 @@ ggplot(day_hour_data, aes(dayofweek, hour, fill = Total)) +
 geom_tile(color = "white") + 
 ggtitle("Heat Map by Hour and Day")
 
+```
+```{r }
 
 #MAP for New York City
 
